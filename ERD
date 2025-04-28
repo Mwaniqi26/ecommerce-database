@@ -1,0 +1,97 @@
+Table brand {
+  brand_id INT PK
+  name VARCHAR
+  description TEXT
+  created_at DATETIME
+}
+
+Table product_category {
+  product_category_id INT PK
+  name VARCHAR
+  description TEXT
+  created_at DATETIME
+}
+
+Table product {
+  product_id INT PK
+  name VARCHAR
+  brand_id INT FK
+  product_category_id INT FK
+  base_price DECIMAL
+  description TEXT
+  created_at DATETIME
+}
+
+Table product_image {
+  product_image_id INT PK
+  product_id INT FK
+  image_url VARCHAR
+  alt_text VARCHAR
+}
+
+Table color {
+  color_id INT PK
+  name VARCHAR
+  hex_code VARCHAR
+}
+
+Table size_category {
+  size_category_id INT PK
+  name VARCHAR
+  description TEXT
+}
+
+Table size_option {
+  size_option_id INT PK
+  size_category_id INT FK
+  size_label VARCHAR
+  size_value DECIMAL
+}
+
+Table product_variation {
+  product_variation_id INT PK
+  product_id INT FK
+  color_id INT FK
+  size_option_id INT FK
+}
+
+Table product_item {
+  product_item_id INT PK
+  product_variation_id INT FK
+  sku VARCHAR
+  price DECIMAL
+  stock_quantity INT
+  created_at DATETIME
+}
+
+Table attribute_category {
+  attribute_category_id INT PK
+  name VARCHAR
+  description TEXT
+}
+
+Table attribute_type {
+  attribute_type_id INT PK
+  name VARCHAR
+}
+
+Table product_attribute {
+  product_attribute_id INT PK
+  product_id INT FK
+  attribute_category_id INT FK
+  attribute_type_id INT FK
+  name VARCHAR
+  value VARCHAR
+}
+
+Ref: product.brand_id > brand.brand_id
+Ref: product.product_category_id > product_category.product_category_id
+Ref: product_image.product_id > product.product_id
+Ref: size_option.size_category_id > size_category.size_category_id
+Ref: product_variation.product_id > product.product_id
+Ref: product_variation.color_id > color.color_id
+Ref: product_variation.size_option_id > size_option.size_option_id
+Ref: product_item.product_variation_id > product_variation.product_variation_id
+Ref: product_attribute.product_id > product.product_id
+Ref: product_attribute.attribute_category_id > attribute_category.attribute_category_id
+Ref: product_attribute.attribute_type_id > attribute_type.attribute_type_id
